@@ -1,0 +1,13 @@
+apply plugin: 'org.sonarqube'
+
+sonarqube {
+  properties {
+    property 'sonar.host.url', 'http://ti-nexus.rsc.humad.com:9000'
+    property 'sonar.analysis.mode', 'preview'
+    property 'sonar.issuesReport.html.enable', 'true'
+    property 'sonar.projectKey', 'com.transcendinsights.sonar:dp-measure-report-service'
+    property 'sonar.projectName', 'dp-measure-report-service'
+    property 'sonar.projectVersion', '1'
+    property 'sonar.sources', 'src/main/groovy'
+  }
+}

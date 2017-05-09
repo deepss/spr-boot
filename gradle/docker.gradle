@@ -1,0 +1,68 @@
+
+buildscript {
+
+  repositories {
+    maven { url "http://ti-nexus.rsc.humad.com:8081/nexus/content/groups/public"}
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.bmuschko:gradle-docker-plugin:3.0.6'
+  }
+
+}
+
+def dockerRegistry = 'ti-dockeri.rsc.humad.com'
+def dockerUser = 'transcendinsights'
+
+apply plugin: com.bmuschko.gradle.docker.DockerRemoteApiPlugin
+
+import com.bmuschko.gradle.docker.tasks.container.*
+import com.bmuschko.gradle.docker.tasks.image.*
+
+task pullDatabaseImage(type: DockerPullImage) {
+  repository 'mysql'
+  tag 'latest'
+}
+
+task inspectDatabaseImage(type: DockerInspectImage) {
+  dependsOn pullDatabaseImage
+  imageId 'mysql'
+}
+
+task createDatabaseContainer(type: DockerCreateContainer) {
+  dependsOn inspectDatabaseImage
+  targetImageId { inspectDatabaseImage.getImageId() }
+  portBindings = ['3306:3306']
+  env = ['MYSQL_ROOT_PASSWORD=secret']
+}
+
+task startDatabaseContainer(type: DockerStartContainer) {
+  dependsOn createDatabaseContainer
+  targetContainerId { createDatabaseContainer.getContainerId() }
+  doLast {
+    sleep(20000)
+  }
+}
+
+task createDockerfile(type: Dockerfile, dependsOn: build) {
+  destFile = file('build/Dockerfile')
+  from 'openjdk:8'
+  maintainer 'Kurt Kremer "kxk8283@transcendinsights.com"'
+  volume '/tmp'
+  addFile "libs/${jar.archiveName}", 'app.jar'
+  runCommand 'sh -c "touch /app.jar"'
+  environmentVariable 'JAVA_OPTS', '""'
+  instruction 'HEALTHCHECK --timeout=5s CMD curl -f http://localhost:8089/ || exit 1'
+  entryPoint 'sh', '-c', 'java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar'
+}
+
+task buildImage(type: DockerBuildImage) {
+  dependsOn createDockerfile
+  inputDir createDockerfile.destFile.parentFile
+  tag "$dockerRegistry/$dockerUser/${jar.baseName}:$version"
+}
+
+task publishImage(type: DockerPushImage, dependsOn: buildImage) {
+  imageName "$dockerRegistry/$dockerUser/${jar.baseName}:$version"
+}
+

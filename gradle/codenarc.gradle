@@ -1,0 +1,36 @@
+buildscript {
+  repositories {
+    maven { url 'http://ti-nexus.rsc.humad.com:8081/nexus/content/groups/public' }
+  }
+  dependencies {
+    classpath 'com.cds:rahulesque:+'
+  }
+}
+
+apply plugin: 'codenarc'
+
+dependencies {
+  codenarc 'org.gmetrics:GMetrics:0.7'
+  codenarc 'net.sourceforge.cobertura:cobertura:2.1.1'
+  codenarc 'org.codenarc:CodeNarc:0.25.2'
+  codenarc 'com.cds:rahulesque:+'
+}
+
+codenarc {
+  configFile = rootProject.file('gradle/codenarc_main.groovy')
+  toolVersion = '0.26.0'
+
+  reportFormat = System.getenv('BUILD_NUMBER') ? 'xml' : 'html'
+}
+
+codenarcTest {
+  configFile = rootProject.file('gradle/codenarc_test.groovy')
+}
+
+codenarcIntegrationTest {
+  configFile = rootProject.file('gradle/codenarc_test.groovy')
+}
+
+if (tasks.findByName('generateCoberturaReport')) {
+  tasks.findByName('codenarcMain').mustRunAfter tasks.findByName('generateCoberturaReport')
+}
