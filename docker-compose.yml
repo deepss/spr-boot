@@ -1,0 +1,42 @@
+version: '3.0'
+services:
+  db:
+    container_name: measure-report-database
+    image: mysql:latest
+#    hostname: db
+    expose:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+
+    networks:
+      - webnet
+  app:
+    container_name: measure-report-service
+    image: ti-dockeri.rsc.humad.com/transcendinsights/measure-report-service:${IMAGE_TAG}
+    depends_on:
+      - db
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+      DB_HOST: measure-report-database
+    ports:
+      - "8089:8089"
+    networks:
+      - webnet
+
+  agent:
+    image: jmenga/ansible
+    volumes:
+      - ./ansible/probe.yml:/ansible/site.yml
+    depends_on:
+      - db
+    environment:
+        PROBE_HOST: measure-report-database
+        PROBE_PORT: "3306"
+    networks:
+      - webnet
+
+networks:
+  webnet:
+
+

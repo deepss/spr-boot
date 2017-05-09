@@ -1,0 +1,8 @@
+---
+applications:
+- name: measure-report-service
+  memory: 1024MB
+  instances: 1
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
+services:
+  - fhir-mysql-service
