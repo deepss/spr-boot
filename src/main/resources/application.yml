@@ -22,7 +22,7 @@ db_host: localhost
 spring:
   profiles: local
   datasource:
-    url: 'jdbc:mysql://${db_host}/measure-report-service?createDatabaseIfNotExist=true'
+    url: 'jdbc:mysql://${db_host}/measure_report_service?createDatabaseIfNotExist=true'
     username: root
     password: secret
 logging:
