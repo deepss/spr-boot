@@ -29,6 +29,12 @@ logging:
 #  level.org.hibernate.SQL: trace
 #  level.org.hibernate.type.descriptor.sql: trace
 #  level.org.springframework.web.client.RestTemplate: debug
+#  level.org.springframework.transaction.interceptor: trace
+
+#  This class changes depending on what implementation of PlatformTransactionManager is used)
+#  level.org.springframework.orm.jpa.JpaTransactionManager: trace
+
+
 security:
   user:
     password: 'secret'
