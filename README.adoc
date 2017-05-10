@@ -1,0 +1,23 @@
+= measure-report-service
+
+A measure-report fhir resource server
+The goals for this application is to provide measure report fhir data to clients
+The discussion for this service can be found at http://jira.transcendinsights.com/browse/HCI-457
+
+== Running locally
+To run the service locally:
+
+Start a local instance of MySQL
+
+[source,bash]
+--
+./gradlew startDatabaseContainer
+--
+
+Start the application
+
+[source,bash]
+--
+./gradlew bootRun -Pargs="--spring.profiles.active=local"
+--
+

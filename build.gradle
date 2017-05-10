@@ -31,6 +31,12 @@ apply plugin: 'propdeps'
 apply plugin: 'propdeps-idea'
 //apply plugin: 'org.ajoberstar.github-pages'
 
+apply from: 'gradle/integration-tests.gradle'
+apply from: 'gradle/publishing.gradle'
+apply from: 'gradle/codequality.gradle'
+apply from: 'gradle/sonar.gradle'
+apply from: 'gradle/docker.gradle'
+
 jar {
 	baseName = 'measure-report-service'
 	version = '0.0.1-SNAPSHOT'
@@ -46,7 +52,10 @@ repositories {
 
 dependencies {
 	compile('org.springframework.kafka:spring-kafka')
+	compile('org.springframework.cloud:spring-cloud-starter-sleuth')
 	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-cloud-connectors')
+	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-web')
 
 	compile('org.springframework:spring-aspects')
@@ -85,6 +94,6 @@ bootRun {
 	if (project.hasProperty('args')) {
 		args project.args.split('\\s+')
 	}
-	//dependsOn asciidoctor
+	dependsOn asciidoctor
 }
 

@@ -1,0 +1,48 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  output:
+    ansi:
+      enabled: detect
+  main:
+    banner-mode: log
+  application:
+    name: measure-report-service
+server:
+  port: 8089
+db_host: localhost
+
+#validate:
+#  measurereport:
+#    create: true
+#    update: true
+
+---
+spring:
+  profiles: local
+  datasource:
+    url: 'jdbc:mysql://${db_host}/measure-report-service?createDatabaseIfNotExist=true'
+    username: root
+    password: secret
+logging:
+#  level.org.hibernate.SQL: trace
+#  level.org.hibernate.type.descriptor.sql: trace
+#  level.org.springframework.web.client.RestTemplate: debug
+security:
+  user:
+    password: 'secret'
+---
+security:
+  user:
+    password: 'secret'
+spring:
+  profiles: test
+  datasource:
+      url: 'jdbc:h2:mem:test;MODE=MySQL'
+      username: root
+      password: secret
+
+
+
+
