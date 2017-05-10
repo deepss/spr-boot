@@ -21,3 +21,9 @@ Start the application
 ./gradlew bootRun -Pargs="--spring.profiles.active=local"
 --
 
+== Get a resource
+
+http://localhost:8090/fhir/MeasureReport/1
+
+(user/secret)
+

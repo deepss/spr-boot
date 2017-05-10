@@ -32,6 +32,8 @@ logging:
 security:
   user:
     password: 'secret'
+server:
+  port: 8090
 ---
 security:
   user:
