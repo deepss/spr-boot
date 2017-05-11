@@ -20,7 +20,7 @@ services:
       SPRING_PROFILES_ACTIVE: local
       DB_HOST: measure-report-database
     ports:
-      - "8089:8089"
+      - "8090:8090"
     networks:
       - webnet
 

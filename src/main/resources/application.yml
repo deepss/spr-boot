@@ -10,7 +10,7 @@ spring:
   application:
     name: measure-report-service
 server:
-  port: 8089
+  port: 8090
 db_host: localhost
 
 #validate:
