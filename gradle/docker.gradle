@@ -52,7 +52,7 @@ task createDockerfile(type: Dockerfile, dependsOn: build) {
   addFile "libs/${jar.archiveName}", 'app.jar'
   runCommand 'sh -c "touch /app.jar"'
   environmentVariable 'JAVA_OPTS', '""'
-  instruction 'HEALTHCHECK --timeout=5s CMD curl -f http://localhost:8089/ || exit 1'
+  instruction 'HEALTHCHECK --timeout=5s CMD curl -f http://localhost:8090/ || exit 1'
   entryPoint 'sh', '-c', 'java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar'
 }
 
