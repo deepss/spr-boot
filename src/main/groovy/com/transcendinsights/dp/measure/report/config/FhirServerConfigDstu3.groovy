@@ -38,7 +38,7 @@ class FhirServerConfigDstu3 extends BaseJavaConfigDstu3 {
       setSubscriptionEnabled(true)
       setSubscriptionPollDelay(5000)
       setSubscriptionPurgeInactiveAfterMillis(DateUtils.MILLIS_PER_HOUR)
-
+      setAllowExternalReferences(true)
       it
     }
   }

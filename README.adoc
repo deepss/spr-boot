@@ -21,6 +21,50 @@ Start the application
 ./gradlew bootRun -Pargs="--spring.profiles.active=local"
 --
 
+== Cloud foundry deploy
+
+To run the service on cloud foundry:
+
+Create the jar artifact
+
+[source,bash]
+--
+./gradlew build
+--
+
+Deploy to cloud foundry
+
+[source,bash]
+--
+cf push <unique appname> -p <path to artifact>
+--
+
+
+== Docker Deploy
+NOTE: Before deploying via docker, make sure that docker is installed and running.
+
+Create the docker image
+
+[source, bash]
+
+--
+./gradlew clean buildImage
+--
+
+Start the application using the docker-compose file
+
+[source, bash]
+
+--
+docker-compose up agent <1>
+IMAGE_TAG=<version> docker-compose up app <2>
+--
+<1> start an agent container that probes the database port until it is available
+
+<2> start the application. <version> is the version of the docker image you want to run
+
+To load data into the MR service, the simplest way is to use the http://hapifhir.io/doc_rest_client.html[HAPI REST Client]
+
 == Get a resource
 
 http://localhost:8090/fhir/MeasureReport/1

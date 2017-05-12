@@ -15,7 +15,7 @@ buildscript {
 }
 
 plugins {
-//	id "com.gorylenko.gradle-git-properties" version "1.4.17"
+	id "com.gorylenko.gradle-git-properties" version "1.4.17"
 	id 'org.asciidoctor.convert' version '1.5.3'
 }
 
@@ -29,7 +29,7 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'propdeps'
 apply plugin: 'propdeps-idea'
-//apply plugin: 'org.ajoberstar.github-pages'
+apply plugin: 'org.ajoberstar.github-pages'
 
 apply from: 'gradle/integration-tests.gradle'
 apply from: 'gradle/publishing.gradle'
@@ -39,7 +39,7 @@ apply from: 'gradle/docker.gradle'
 
 jar {
 	baseName = 'measure-report-service'
-	version = '0.0.1-SNAPSHOT'
+	//version = '0.0.1-SNAPSHOT'
 	manifest.attributes += ['Implementation-Version': version]
 }
 
