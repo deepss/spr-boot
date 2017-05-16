@@ -71,3 +71,24 @@ http://localhost:8090/fhir/MeasureReport/1
 
 (user/secret)
 
+== Design
+
+This service is created to serve requests for FHIR resources directly related to measure report resources contained in
+the Anvita bundle produced during analytics runs.  The FHIR-compatible store and query capability is provided by the
+HAPI FHIR JPA server implementation http://hapifhir.io/ and a test implementation of this server with sample data is
+available at http://fhirtest.uhn.ca/home?serverId=home_21
+
+Care and Populations are the primary clients of this service, and are interested in obtaining measure report data for
+patients and organization level rollups respectively.  Other client applications are anticipated and so general support
+for granular FHIR resources is the goal of this service.
+
+In order to populate our implementation, this service shall listen for and process measure report events
+published by Event Store on a kafka stream.  When an event arrives, this service shall deconstruct the FHIR bundle into
+its consituent resources of Measure, Measure Report, and Library and store them accordingly.  References to Measures
+and Libraries within the Measure Report sections of the bundle shall be updated to reflect the resource IDs generated
+during storage.
+
+This service will also be used by the Meausure Report aggregator service to store organization-level rollup reports
+generated in that aggregator service.
+
+
