@@ -1,0 +1,99 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.3.RELEASE'
+	}
+	repositories {
+		maven { url "http://ti-nexus.rsc.humad.com:8081/nexus/content/groups/public"}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'org.kordamp.gradle:stats-gradle-plugin:0.2.0'
+		classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1"
+		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
+		classpath 'mysql:mysql-connector-java:5.1.41'
+	}
+}
+
+plugins {
+	id "com.gorylenko.gradle-git-properties" version "1.4.17"
+	id 'org.asciidoctor.convert' version '1.5.3'
+}
+
+ext {
+	snippetsDir = file('build/generated-snippets')
+	hapiVersion = 2.4
+}
+
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'propdeps'
+apply plugin: 'propdeps-idea'
+apply plugin: 'org.ajoberstar.github-pages'
+
+apply from: 'gradle/integration-tests.gradle'
+apply from: 'gradle/publishing.gradle'
+apply from: 'gradle/codequality.gradle'
+apply from: 'gradle/sonar.gradle'
+apply from: 'gradle/docker.gradle'
+
+jar {
+	baseName = 'measure-report-service'
+	//version = '0.0.1-SNAPSHOT'
+	manifest.attributes += ['Implementation-Version': version]
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+	maven { url "http://ti-nexus.rsc.humad.com:8081/nexus/content/groups/public"}
+}
+
+
+dependencies {
+	compile('org.springframework.kafka:spring-kafka')
+	compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-cloud-connectors')
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-web')
+
+	compile('org.springframework:spring-aspects')
+	compile('org.codehaus.groovy:groovy-all')
+
+	compile("ca.uhn.hapi.fhir:hapi-fhir-base:${hapiVersion}")
+	compile("ca.uhn.hapi.fhir:hapi-fhir-structures-dstu3:${hapiVersion}")
+	compile("ca.uhn.hapi.fhir:hapi-fhir-jpaserver-base:${hapiVersion}")
+	compile('org.apache.tomcat:tomcat-jdbc')
+	compile('mysql:mysql-connector-java:5.1.41')
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.spockframework:spock-core:1.1-groovy-2.4-rc-3')
+	testCompile('org.spockframework:spock-spring:1.1-groovy-2.4-rc-3')
+
+	testRuntime('com.h2database:h2')
+}
+
+configurations.all {
+	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+		if (details.requested.group == 'org.hibernate' && details.requested.name == 'hibernate-search-orm' ) {
+			//new version of hibernate-search is not compatible with current version of hibernate supported by spring-boot
+			details.useVersion '5.6.1.Final'
+		}
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:Camden.SR5"
+	}
+}
+
+bootRun {
+	classpath file("$buildDir/classes")
+	if (project.hasProperty('args')) {
+		args project.args.split('\\s+')
+	}
+	dependsOn asciidoctor
+}
+

@@ -1,0 +1,2177 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "total": 42,
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "PAT-00001",
+        "identifier": [
+          {
+            "value": "21008754"
+          }
+        ],
+        "name": [
+          {
+            "family": "BEE",
+            "given": [
+              "HONEY"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1960-06-11"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Library",
+        "id": "LIB-00-00002",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/v2/0203",
+              "code": "text/cql"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Measure",
+        "id": "MEA-00-00003",
+        "identifier": [
+          {
+            "value": "28788"
+          }
+        ],
+        "version": "Rev. 2016",
+        "title": "Preventive care and screening: influenza immunization",
+        "status": "active",
+        "description": "Percentage of patients aged 6 months and older seen for a visit between October 1 and March 31 who received an influenza immunization OR who reported previous receipt of an influenza immunization",
+        "library": [
+          {
+            "reference": "#LIB-00-00002"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MeasureReport",
+        "contained": [
+          {
+            "resourceType": "Bundle",
+            "id": "BUN-00-00004",
+            "entry": [
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "initial population"
+                    }
+                  }
+                ],
+                "fullUrl": "PAT-00001"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "denominator"
+                    }
+                  }
+                ],
+                "fullUrl": "OBS-00005"
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "FAILURE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "FAILURE_REASON",
+            "valueIdentifier": {
+              "value": "UnknownFailureDateReasonCodeType"
+            }
+          },
+          {
+            "url": "BASE_EVENT_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "ACTUAL_COMPLIANCE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "COMPLIANCE_MPR_PCT",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "HEDIS_COVERAGE",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "ALERT_STATUS",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "createDate",
+            "valueIdentifier": {
+              "value": "2017-03-05"
+            }
+          }
+        ],
+        "measure": {
+          "reference": "#MEA-00-00003"
+        },
+        "type": "individual",
+        "patient": {
+          "reference": "PAT-00001"
+        },
+        "period": {
+          "start": "2017-01-01T00:00:00",
+          "end": "2017-12-31T00:00:00"
+        },
+        "status": "complete",
+        "date": "2017-03-05",
+        "group": [
+          {
+            "identifier": {
+              "value": "Measure-28788"
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "initial-population"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exception"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exclusion"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "numerator"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          }
+        ],
+        "evaluatedResources": {
+          "reference": "#BUN-00-00004"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "OBS-00005",
+        "status": "final",
+        "code": {
+          "text": "patient's age at cutoff/Run Date."
+        },
+        "subject": {
+          "reference": "PAT-00001"
+        },
+        "valueString": "56 years 8 months 22 days"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Library",
+        "id": "LIB-00-00006",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/v2/0203",
+              "code": "text/cql"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Measure",
+        "id": "MEA-00-00007",
+        "identifier": [
+          {
+            "value": "28791"
+          }
+        ],
+        "version": "Rev. 2016",
+        "title": "Preventive care and screening: influenza immunization",
+        "status": "active",
+        "description": "Percentage of patients aged 6 months and older seen for a visit between October 1 and March 31 who received an influenza immunization OR who reported previous receipt of an influenza immunization",
+        "library": [
+          {
+            "reference": "#LIB-00-00006"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MeasureReport",
+        "contained": [
+          {
+            "resourceType": "Bundle",
+            "id": "BUN-00-00008",
+            "entry": [
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "initial population"
+                    }
+                  }
+                ],
+                "fullUrl": "PAT-00001"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "denominator"
+                    }
+                  }
+                ],
+                "fullUrl": "OBS-00009"
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "FAILURE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "FAILURE_REASON",
+            "valueIdentifier": {
+              "value": "UnknownFailureDateReasonCodeType"
+            }
+          },
+          {
+            "url": "BASE_EVENT_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "ACTUAL_COMPLIANCE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "COMPLIANCE_MPR_PCT",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "HEDIS_COVERAGE",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "ALERT_STATUS",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "createDate",
+            "valueIdentifier": {
+              "value": "2017-03-05"
+            }
+          }
+        ],
+        "measure": {
+          "reference": "#MEA-00-00007"
+        },
+        "type": "individual",
+        "patient": {
+          "reference": "PAT-00001"
+        },
+        "period": {
+          "start": "2017-01-01T00:00:00",
+          "end": "2017-12-31T00:00:00"
+        },
+        "status": "complete",
+        "date": "2017-03-05",
+        "group": [
+          {
+            "identifier": {
+              "value": "Measure-28791"
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "initial-population"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exception"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exclusion"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "numerator"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          }
+        ],
+        "evaluatedResources": {
+          "reference": "#BUN-00-00008"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "OBS-00009",
+        "status": "final",
+        "code": {
+          "text": "patient's age at cutoff/Run Date."
+        },
+        "subject": {
+          "reference": "PAT-00001"
+        },
+        "valueString": "56 years 8 months 22 days"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Library",
+        "id": "LIB-00-00010",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/v2/0203",
+              "code": "text/cql"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Measure",
+        "id": "MEA-00-00011",
+        "identifier": [
+          {
+            "value": "28795"
+          }
+        ],
+        "version": "Rev. 2016",
+        "title": "Preventive care and screening: influenza immunization",
+        "status": "active",
+        "description": "Percentage of patients aged 6 months and older seen for a visit between October 1 and March 31 who received an influenza immunization OR who reported previous receipt of an influenza immunization",
+        "library": [
+          {
+            "reference": "#LIB-00-00010"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MeasureReport",
+        "contained": [
+          {
+            "resourceType": "Bundle",
+            "id": "BUN-00-00012",
+            "entry": [
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "initial population"
+                    }
+                  }
+                ],
+                "fullUrl": "PAT-00001"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "numerator"
+                    }
+                  }
+                ],
+                "fullUrl": "MEDCLAIM-00013"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "denominator"
+                    }
+                  }
+                ],
+                "fullUrl": "OBS-00014"
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "FAILURE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "FAILURE_REASON",
+            "valueIdentifier": {
+              "value": "UnknownFailureDateReasonCodeType"
+            }
+          },
+          {
+            "url": "BASE_EVENT_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "ACTUAL_COMPLIANCE_DATE",
+            "valueIdentifier": {
+              "value": "2014-06-08"
+            }
+          },
+          {
+            "url": "COMPLIANCE_MPR_PCT",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "HEDIS_COVERAGE",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "ALERT_STATUS",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "createDate",
+            "valueIdentifier": {
+              "value": "2017-03-05"
+            }
+          }
+        ],
+        "measure": {
+          "reference": "#MEA-00-00011"
+        },
+        "type": "individual",
+        "patient": {
+          "reference": "PAT-00001"
+        },
+        "period": {
+          "start": "2017-01-01T00:00:00",
+          "end": "2017-12-31T00:00:00"
+        },
+        "status": "complete",
+        "date": "2017-03-05",
+        "group": [
+          {
+            "identifier": {
+              "value": "Measure-28795"
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "initial-population"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exception"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exclusion"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "numerator"
+                    }
+                  ]
+                },
+                "count": 1
+              }
+            ]
+          }
+        ],
+        "evaluatedResources": {
+          "reference": "#BUN-00-00012"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Claim",
+        "id": "MEDCLAIM-00013",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "MR",
+                  "display": "CLAIM_ID"
+                }
+              ]
+            },
+            "value": "299313-VBD94256"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "LR",
+                  "display": "CLAIM_LINE_NUMBER"
+                }
+              ]
+            },
+            "value": "1"
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "id": "PAT-00001"
+        },
+        "created": "2014-06-08T21:00:00-07:00",
+        "hospitalization": {
+          "start": "2014-06-08T21:00:00-07:00",
+          "end": "2014-06-24T21:00:00-07:00"
+        },
+        "item": [
+          {
+            "sequence": 1,
+            "service": {
+              "coding": [
+                {
+                  "id": "ICD9PROC",
+                  "code": "45.25",
+                  "display": "Endoscopic Large Bowel Biopsy"
+                }
+              ]
+            },
+            "servicedDate": "2014-06-08T21:00:00-07:00"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "OBS-00014",
+        "status": "final",
+        "code": {
+          "text": "patient's age at cutoff/Run Date."
+        },
+        "subject": {
+          "reference": "PAT-00001"
+        },
+        "valueString": "56 years 8 months 22 days"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Library",
+        "id": "LIB-00-00015",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/v2/0203",
+              "code": "text/cql"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Measure",
+        "id": "MEA-00-00016",
+        "identifier": [
+          {
+            "value": "28796"
+          }
+        ],
+        "version": "Rev. 2016",
+        "title": "Preventive care and screening: influenza immunization",
+        "status": "active",
+        "description": "Percentage of patients aged 6 months and older seen for a visit between October 1 and March 31 who received an influenza immunization OR who reported previous receipt of an influenza immunization",
+        "library": [
+          {
+            "reference": "#LIB-00-00015"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MeasureReport",
+        "contained": [
+          {
+            "resourceType": "Bundle",
+            "id": "BUN-00-00017",
+            "entry": [
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "initial population"
+                    }
+                  }
+                ],
+                "fullUrl": "PAT-00001"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "denominator"
+                    }
+                  }
+                ],
+                "fullUrl": "OBS-00018"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "denominator"
+                    }
+                  }
+                ],
+                "fullUrl": "OBS-00019"
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "FAILURE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "FAILURE_REASON",
+            "valueIdentifier": {
+              "value": "UnknownFailureDateReasonCodeType"
+            }
+          },
+          {
+            "url": "BASE_EVENT_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "ACTUAL_COMPLIANCE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "COMPLIANCE_MPR_PCT",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "HEDIS_COVERAGE",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "ALERT_STATUS",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "createDate",
+            "valueIdentifier": {
+              "value": "2017-03-05"
+            }
+          }
+        ],
+        "measure": {
+          "reference": "#MEA-00-00016"
+        },
+        "type": "individual",
+        "patient": {
+          "reference": "PAT-00001"
+        },
+        "period": {
+          "start": "2017-01-01T00:00:00",
+          "end": "2017-12-31T00:00:00"
+        },
+        "status": "complete",
+        "date": "2017-03-05",
+        "group": [
+          {
+            "identifier": {
+              "value": "Measure-28796"
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "initial-population"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exception"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exclusion"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "numerator"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          }
+        ],
+        "evaluatedResources": {
+          "reference": "#BUN-00-00017"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "OBS-00018",
+        "status": "final",
+        "code": {
+          "text": "patient's age at cutoff/Run Date."
+        },
+        "subject": {
+          "reference": "PAT-00001"
+        },
+        "valueString": "56 years 8 months 22 days"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "OBS-00019",
+        "status": "final",
+        "subject": {
+          "reference": "PAT-00001"
+        },
+        "valueString": "Unknown"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Library",
+        "id": "LIB-00-00020",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/v2/0203",
+              "code": "text/cql"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Measure",
+        "id": "MEA-00-00021",
+        "identifier": [
+          {
+            "value": "28814"
+          }
+        ],
+        "version": "Rev. 2016",
+        "title": "Preventive care and screening: influenza immunization",
+        "status": "active",
+        "description": "Percentage of patients aged 6 months and older seen for a visit between October 1 and March 31 who received an influenza immunization OR who reported previous receipt of an influenza immunization",
+        "library": [
+          {
+            "reference": "#LIB-00-00020"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MeasureReport",
+        "contained": [
+          {
+            "resourceType": "Bundle",
+            "id": "BUN-00-00022",
+            "entry": [
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "initial population"
+                    }
+                  }
+                ],
+                "fullUrl": "PAT-00001"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "denominator"
+                    }
+                  }
+                ],
+                "fullUrl": "OBS-00023"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "denominator"
+                    }
+                  }
+                ],
+                "fullUrl": "OBS-00024"
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "FAILURE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "FAILURE_REASON",
+            "valueIdentifier": {
+              "value": "UnknownFailureDateReasonCodeType"
+            }
+          },
+          {
+            "url": "BASE_EVENT_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "ACTUAL_COMPLIANCE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "COMPLIANCE_MPR_PCT",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "HEDIS_COVERAGE",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "ALERT_STATUS",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "createDate",
+            "valueIdentifier": {
+              "value": "2017-03-05"
+            }
+          }
+        ],
+        "measure": {
+          "reference": "#MEA-00-00021"
+        },
+        "type": "individual",
+        "patient": {
+          "reference": "PAT-00001"
+        },
+        "period": {
+          "start": "2017-01-01T00:00:00",
+          "end": "2017-12-31T00:00:00"
+        },
+        "status": "complete",
+        "date": "2017-03-05",
+        "group": [
+          {
+            "identifier": {
+              "value": "Measure-28814"
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "initial-population"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exception"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exclusion"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "numerator"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          }
+        ],
+        "evaluatedResources": {
+          "reference": "#BUN-00-00022"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "OBS-00023",
+        "status": "final",
+        "code": {
+          "text": "patient's age at cutoff/Run Date."
+        },
+        "subject": {
+          "reference": "PAT-00001"
+        },
+        "valueString": "56 years 8 months 22 days"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "OBS-00024",
+        "status": "final",
+        "subject": {
+          "reference": "PAT-00001"
+        },
+        "valueString": "Unknown"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Library",
+        "id": "LIB-00-00025",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/v2/0203",
+              "code": "text/cql"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Measure",
+        "id": "MEA-00-00026",
+        "identifier": [
+          {
+            "value": "28833"
+          }
+        ],
+        "version": "Rev. 2016",
+        "title": "Preventive care and screening: influenza immunization",
+        "status": "active",
+        "description": "Percentage of patients aged 6 months and older seen for a visit between October 1 and March 31 who received an influenza immunization OR who reported previous receipt of an influenza immunization",
+        "library": [
+          {
+            "reference": "#LIB-00-00025"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MeasureReport",
+        "contained": [
+          {
+            "resourceType": "Bundle",
+            "id": "BUN-00-00027",
+            "entry": [
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "initial population"
+                    }
+                  }
+                ],
+                "fullUrl": "PAT-00001"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "denominator"
+                    }
+                  }
+                ],
+                "fullUrl": "OBS-00028"
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "FAILURE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "FAILURE_REASON",
+            "valueIdentifier": {
+              "value": "UnknownFailureDateReasonCodeType"
+            }
+          },
+          {
+            "url": "BASE_EVENT_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "ACTUAL_COMPLIANCE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "COMPLIANCE_MPR_PCT",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "HEDIS_COVERAGE",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "ALERT_STATUS",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "createDate",
+            "valueIdentifier": {
+              "value": "2017-03-05"
+            }
+          }
+        ],
+        "measure": {
+          "reference": "#MEA-00-00026"
+        },
+        "type": "individual",
+        "patient": {
+          "reference": "PAT-00001"
+        },
+        "period": {
+          "start": "2017-01-01T00:00:00",
+          "end": "2017-12-31T00:00:00"
+        },
+        "status": "complete",
+        "date": "2017-03-05",
+        "group": [
+          {
+            "identifier": {
+              "value": "Measure-28833"
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "initial-population"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exception"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exclusion"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "numerator"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          }
+        ],
+        "evaluatedResources": {
+          "reference": "#BUN-00-00027"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "OBS-00028",
+        "status": "final",
+        "code": {
+          "text": "patient's age at cutoff/Run Date."
+        },
+        "subject": {
+          "reference": "PAT-00001"
+        },
+        "valueString": "56 years 8 months 22 days"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Library",
+        "id": "LIB-00-00029",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/v2/0203",
+              "code": "text/cql"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Measure",
+        "id": "MEA-00-00030",
+        "identifier": [
+          {
+            "value": "28837"
+          }
+        ],
+        "version": "Rev. 2016",
+        "title": "Preventive care and screening: influenza immunization",
+        "status": "active",
+        "description": "Percentage of patients aged 6 months and older seen for a visit between October 1 and March 31 who received an influenza immunization OR who reported previous receipt of an influenza immunization",
+        "library": [
+          {
+            "reference": "#LIB-00-00029"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MeasureReport",
+        "contained": [
+          {
+            "resourceType": "Bundle",
+            "id": "BUN-00-00031",
+            "entry": [
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "initial population"
+                    }
+                  }
+                ],
+                "fullUrl": "PAT-00001"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "denominator"
+                    }
+                  }
+                ],
+                "fullUrl": "OBS-00032"
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "FAILURE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "FAILURE_REASON",
+            "valueIdentifier": {
+              "value": "UnknownFailureDateReasonCodeType"
+            }
+          },
+          {
+            "url": "BASE_EVENT_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "ACTUAL_COMPLIANCE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "COMPLIANCE_MPR_PCT",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "HEDIS_COVERAGE",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "ALERT_STATUS",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "createDate",
+            "valueIdentifier": {
+              "value": "2017-03-05"
+            }
+          }
+        ],
+        "measure": {
+          "reference": "#MEA-00-00030"
+        },
+        "type": "individual",
+        "patient": {
+          "reference": "PAT-00001"
+        },
+        "period": {
+          "start": "2017-01-01T00:00:00",
+          "end": "2017-12-31T00:00:00"
+        },
+        "status": "complete",
+        "date": "2017-03-05",
+        "group": [
+          {
+            "identifier": {
+              "value": "Measure-28837"
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "initial-population"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exception"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exclusion"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "numerator"
+                    }
+                  ]
+                },
+                "count": 0
+              }
+            ]
+          }
+        ],
+        "evaluatedResources": {
+          "reference": "#BUN-00-00031"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "OBS-00032",
+        "status": "final",
+        "code": {
+          "text": "patient's age at cutoff/Run Date."
+        },
+        "subject": {
+          "reference": "PAT-00001"
+        },
+        "valueString": "56 years 8 months 22 days"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Library",
+        "id": "LIB-00-00033",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/v2/0203",
+              "code": "text/cql"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Measure",
+        "id": "MEA-00-00034",
+        "identifier": [
+          {
+            "value": "28844"
+          }
+        ],
+        "version": "Rev. 2016",
+        "title": "Preventive care and screening: influenza immunization",
+        "status": "active",
+        "description": "Percentage of patients aged 6 months and older seen for a visit between October 1 and March 31 who received an influenza immunization OR who reported previous receipt of an influenza immunization",
+        "library": [
+          {
+            "reference": "#LIB-00-00033"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MeasureReport",
+        "contained": [
+          {
+            "resourceType": "Bundle",
+            "id": "BUN-00-00035",
+            "entry": [
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "initial population"
+                    }
+                  }
+                ],
+                "fullUrl": "PAT-00001"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "numerator"
+                    }
+                  }
+                ],
+                "fullUrl": "MEDCLAIM-00036"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "numerator"
+                    }
+                  }
+                ],
+                "fullUrl": "MEDCLAIM-00037"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "numerator"
+                    }
+                  }
+                ],
+                "fullUrl": "MEDCLAIM-00038"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "numerator"
+                    }
+                  }
+                ],
+                "fullUrl": "MEDCLAIM-00039"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "denominator"
+                    }
+                  }
+                ],
+                "fullUrl": "OBS-00040"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "denominator"
+                    }
+                  }
+                ],
+                "fullUrl": "MEDCLAIM-00041"
+              },
+              {
+                "extension": [
+                  {
+                    "url": "criteria",
+                    "valueIdentifier": {
+                      "value": "denominator"
+                    }
+                  }
+                ],
+                "fullUrl": "MEDCLAIM-00042"
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "FAILURE_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "FAILURE_REASON",
+            "valueIdentifier": {
+              "value": "UnknownFailureDateReasonCodeType"
+            }
+          },
+          {
+            "url": "BASE_EVENT_DATE",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "ACTUAL_COMPLIANCE_DATE",
+            "valueIdentifier": {
+              "value": "2016-03-30"
+            }
+          },
+          {
+            "url": "COMPLIANCE_MPR_PCT",
+            "valueIdentifier": {
+              "value": "(null)"
+            }
+          },
+          {
+            "url": "HEDIS_COVERAGE",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "ALERT_STATUS",
+            "valueIdentifier": {
+              "value": "-"
+            }
+          },
+          {
+            "url": "createDate",
+            "valueIdentifier": {
+              "value": "2017-03-05"
+            }
+          }
+        ],
+        "measure": {
+          "reference": "#MEA-00-00034"
+        },
+        "type": "individual",
+        "patient": {
+          "reference": "PAT-00001"
+        },
+        "period": {
+          "start": "2017-01-01T00:00:00",
+          "end": "2017-12-31T00:00:00"
+        },
+        "status": "complete",
+        "date": "2017-03-05",
+        "group": [
+          {
+            "identifier": {
+              "value": "Measure-28844"
+            },
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "initial-population"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator"
+                    }
+                  ]
+                },
+                "count": 1
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exception"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "denominator-exclusion"
+                    }
+                  ]
+                },
+                "count": 0
+              },
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "code": "numerator"
+                    }
+                  ]
+                },
+                "count": 1
+              }
+            ]
+          }
+        ],
+        "evaluatedResources": {
+          "reference": "#BUN-00-00035"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Claim",
+        "id": "MEDCLAIM-00036",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "MR",
+                  "display": "CLAIM_ID"
+                }
+              ]
+            }
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "LR",
+                  "display": "CLAIM_LINE_NUMBER"
+                }
+              ]
+            },
+            "value": "0"
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "id": "PAT-00001"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Claim",
+        "id": "MEDCLAIM-00037",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "MR",
+                  "display": "CLAIM_ID"
+                }
+              ]
+            },
+            "value": "357-VBJ46199"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "LR",
+                  "display": "CLAIM_LINE_NUMBER"
+                }
+              ]
+            },
+            "value": "1"
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "id": "PAT-00001"
+        },
+        "created": "2016-03-30T21:00:00-07:00",
+        "hospitalization": {
+          "start": "2016-03-30T21:00:00-07:00",
+          "end": "2016-04-07T21:00:00-07:00"
+        },
+        "item": [
+          {
+            "sequence": 1,
+            "service": {
+              "coding": [
+                {
+                  "id": "REVCODE",
+                  "code": "0120",
+                  "display": "ROOM ACCOMMODATION-SEMIPRIVATE- 2-BED GENERAL"
+                }
+              ]
+            },
+            "servicedDate": "2016-03-30T21:00:00-07:00"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Claim",
+        "id": "MEDCLAIM-00038",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "MR",
+                  "display": "CLAIM_ID"
+                }
+              ]
+            },
+            "value": "357-VBJ46199"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "LR",
+                  "display": "CLAIM_LINE_NUMBER"
+                }
+              ]
+            },
+            "value": "1"
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "id": "PAT-00001"
+        },
+        "created": "2016-03-30T21:00:00-07:00",
+        "hospitalization": {
+          "start": "2016-03-30T21:00:00-07:00",
+          "end": "2016-04-07T21:00:00-07:00"
+        },
+        "item": [
+          {
+            "sequence": 2,
+            "service": {
+              "coding": [
+                {
+                  "id": "REVCODE",
+                  "code": "0200",
+                  "display": "ROOM-INTENSIVE CARE-GENERAL"
+                }
+              ]
+            },
+            "servicedDate": "2016-03-30T21:00:00-07:00"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Claim",
+        "id": "MEDCLAIM-00039",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "MR",
+                  "display": "CLAIM_ID"
+                }
+              ]
+            },
+            "value": "357-VBJ46199"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "LR",
+                  "display": "CLAIM_LINE_NUMBER"
+                }
+              ]
+            },
+            "value": "1"
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "id": "PAT-00001"
+        },
+        "created": "2016-03-30T21:00:00-07:00",
+        "hospitalization": {
+          "start": "2016-03-30T21:00:00-07:00",
+          "end": "2016-04-07T21:00:00-07:00"
+        },
+        "item": [
+          {
+            "sequence": 3,
+            "service": {
+              "coding": [
+                {
+                  "id": "REVCODE",
+                  "code": "0206",
+                  "display": "ROOM INTENSIVE CARE POST ICU/INTERMEDIATE ICU"
+                }
+              ]
+            },
+            "servicedDate": "2016-03-30T21:00:00-07:00"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "OBS-00040",
+        "status": "final",
+        "code": {
+          "text": "patient's age at cutoff/Run Date."
+        },
+        "subject": {
+          "reference": "PAT-00001"
+        },
+        "valueString": "56 years 8 months 22 days"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Claim",
+        "id": "MEDCLAIM-00041",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "MR",
+                  "display": "CLAIM_ID"
+                }
+              ]
+            },
+            "value": "299-VBJ46198"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "LR",
+                  "display": "CLAIM_LINE_NUMBER"
+                }
+              ]
+            },
+            "value": "1"
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "id": "PAT-00001"
+        },
+        "created": "2016-03-30T21:00:00-07:00",
+        "hospitalization": {
+          "start": "2016-03-30T21:00:00-07:00",
+          "end": "2016-03-30T21:00:00-07:00"
+        },
+        "item": [
+          {
+            "sequence": 6,
+            "service": {
+              "coding": [
+                {
+                  "id": "CPT",
+                  "code": "99291",
+                  "display": "Critical care, evaluation and management of the critically ill or critically injured patient; first 30-74 minutes"
+                }
+              ]
+            },
+            "servicedDate": "2016-03-30T21:00:00-07:00"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Claim",
+        "id": "MEDCLAIM-00042",
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "MR",
+                  "display": "CLAIM_ID"
+                }
+              ]
+            },
+            "value": "22-2161250169HS"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/v2/0203",
+                  "code": "LR",
+                  "display": "CLAIM_LINE_NUMBER"
+                }
+              ]
+            },
+            "value": "1"
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "id": "PAT-00001"
+        },
+        "created": "2016-04-07T21:00:00-07:00",
+        "hospitalization": {
+          "start": "2016-03-30T21:00:00-07:00",
+          "end": "2016-04-07T21:00:00-07:00"
+        }
+      }
+    }
+  ]
+}
