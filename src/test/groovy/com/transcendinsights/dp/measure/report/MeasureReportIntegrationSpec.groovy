@@ -14,7 +14,7 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 /**
- * @author dxl0190
+ * @author Olu Oyedipe, dxl0190
  * @since 2017-05-16.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
