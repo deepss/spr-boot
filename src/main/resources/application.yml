@@ -50,7 +50,11 @@ spring:
       url: 'jdbc:h2:mem:test;MODE=MySQL'
       username: root
       password: secret
-
-
-
-
+webservices:
+  eventStoreService:
+    host: localhost:9000
+    url: http://${webservices.eventStoreService.host}
+    authType: none
+    eventbody: /eventBody
+    eventMetaData: /events
+    contentType: application/json
