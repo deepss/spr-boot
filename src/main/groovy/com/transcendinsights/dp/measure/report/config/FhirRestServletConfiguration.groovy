@@ -9,6 +9,7 @@ import ca.uhn.fhir.jpa.provider.dstu3.JpaSystemProviderDstu3
 import ca.uhn.fhir.jpa.search.DatabaseBackedPagingProvider
 import ca.uhn.fhir.rest.server.ETagSupportEnum
 import ca.uhn.fhir.rest.server.EncodingEnum
+import ca.uhn.fhir.rest.server.IPagingProvider
 import ca.uhn.fhir.rest.server.RestfulServer
 import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor
 import ca.uhn.fhir.rest.server.interceptor.IServerInterceptor
@@ -60,7 +61,9 @@ class FhirRestServletConfiguration extends RestfulServer {
     setDefaultPrettyPrint(true)
     setDefaultResponseEncoding(EncodingEnum.JSON)
 
-    setPagingProvider(applicationContext.getBean(DatabaseBackedPagingProvider))
+    IPagingProvider pagingProvider = applicationContext.getBean(DatabaseBackedPagingProvider)
+    pagingProvider.setDefaultPageSize(30)
+    setPagingProvider(pagingProvider)
 
     CorsConfiguration config = new CorsConfiguration().with {
       addAllowedHeader('Origin')
