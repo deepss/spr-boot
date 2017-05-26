@@ -62,7 +62,7 @@ class FhirRestServletConfiguration extends RestfulServer {
     setDefaultResponseEncoding(EncodingEnum.JSON)
 
     IPagingProvider pagingProvider = applicationContext.getBean(DatabaseBackedPagingProvider)
-    pagingProvider.setDefaultPageSize(20)
+    pagingProvider.setDefaultPageSize(30)
     setPagingProvider(pagingProvider)
 
     CorsConfiguration config = new CorsConfiguration().with {
