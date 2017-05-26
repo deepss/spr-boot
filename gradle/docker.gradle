@@ -2,7 +2,7 @@
 buildscript {
 
   repositories {
-    maven { url "http://ti-nexus.rsc.humad.com:8081/nexus/content/groups/public"}
+    maven { url "http://ti-repo.rsc.humad.com/artifactory/public"}
     jcenter()
   }
   dependencies {
