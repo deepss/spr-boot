@@ -7,5 +7,5 @@ import ca.uhn.fhir.rest.server.IBundleProvider
  */
 interface DateSearchOperationService {
 
-    IBundleProvider searchMonthlyMeasureReports(String givenDate)
+    IBundleProvider searchMonthlyMeasureReports(String givenDate, String orgId, String measureId)
 }

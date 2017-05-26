@@ -4,6 +4,7 @@ import ca.uhn.fhir.jpa.dao.IFhirResourceDao
 import ca.uhn.fhir.rest.server.IBundleProvider
 import ca.uhn.fhir.rest.server.SimpleBundleProvider
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException
+import groovy.util.logging.Slf4j
 import org.hl7.fhir.dstu3.model.IdType
 import org.hl7.fhir.dstu3.model.MeasureReport
 import org.hl7.fhir.instance.model.api.IBaseResource
@@ -15,53 +16,62 @@ import java.text.SimpleDateFormat
 /**
  * Created by dxl0190 on 5/12/17.
  */
+@Slf4j
 @Service
+@SuppressWarnings(['SimpleDateFormatMissingLocale'])
 class DateSearchOperationServiceImpl implements DateSearchOperationService {
 
     @Autowired
     IFhirResourceDao<MeasureReport> newMeasureReportDao
 
     @Override
-    @SuppressWarnings(['SimpleDateFormatMissingLocale', 'EmptyCatchBlock'])
-    IBundleProvider searchMonthlyMeasureReports(String givenDate) {
-        def get12Dates = []
+    IBundleProvider searchMonthlyMeasureReports(String givenDate, String orgId, String measureId) {
+        def dateList = []
         List<IBaseResource> resources = []
         SimpleDateFormat dateFormat = new SimpleDateFormat('yyyyMMdd')
-        get12Dates = list12Dates(givenDate)
-        def count = 1
-        for (each in get12Dates) {
-            def eachId= dateFormat.format(each) + "-ORG$count-M$count"
-            IdType idType = new IdType()
-            idType.id = eachId
-            idType.value = eachId
-            MeasureReport mr
-            try {
-                mr = newMeasureReportDao.read(idType)
-
-            }catch (ResourceNotFoundException r) {
-//                print "resource not found $eachId"
-            }
+        dateList = listDates(givenDate)
+        for (each in dateList) {
+            def eachId= dateFormat.format(each) + "-$orgId-$measureId"
+            MeasureReport mr = searchByMRId(eachId)
             if (mr != null) {
                 resources.add(mr)
             }
-            count++
         }
-
         new SimpleBundleProvider(resources)
     }
 
-    @SuppressWarnings(['EmptyIfStatement'])
-    def list12Dates(String knownDate) {
+    def listDates(String dateStr) {
         List<String> twelveDates = []
+        SimpleDateFormat dateFormat = new SimpleDateFormat('yyyy-MM-dd')
         Calendar cal = Calendar.instance
-        if (knownDate != null) {
-            12.times {
+        Date knownDt = dateFormat.parse(dateStr)
+        cal.setTime(knownDt)
+        if (dateStr != null) {
+//            year-to-date
+            for (every in 1..12) {
                 cal.add(Calendar.MONTH, -1)
                 cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE))
                 Date lastDateOfPreviousMonth = cal.time
                 twelveDates.add(lastDateOfPreviousMonth)
+                int prevMonth = cal.get(Calendar.MONTH)
+                if (prevMonth == 0) {        //if Jan, exit
+                    break
+                }
             }
         }
         twelveDates
+    }
+
+    MeasureReport searchByMRId(String mrId) {
+        IdType idType = new IdType()
+        idType.id = mrId
+        idType.value = mrId
+        MeasureReport foundMR
+        try {
+            foundMR = newMeasureReportDao.read(idType)
+        }catch (ResourceNotFoundException r) {
+            log.debug("resource not found $mrId")
+        }
+        foundMR
     }
 }
