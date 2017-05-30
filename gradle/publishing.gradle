@@ -8,7 +8,7 @@ version = "1.0-${build}"
 publishing {
   repositories {
     maven {
-      url 'http://ti-nexus.rsc.humad.com:8081/nexus/content/repositories/eng-releases'
+      url 'http://ti-repo.rsc.humad.com/artifactory/eng-releases'
       credentials {
         username = nexusUsername
         password = nexusPassword
