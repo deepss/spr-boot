@@ -44,18 +44,25 @@ class DateSearchOperationServiceImpl implements DateSearchOperationService {
         List<String> twelveDates = []
         SimpleDateFormat dateFormat = new SimpleDateFormat('yyyy-MM-dd')
         Calendar cal = Calendar.instance
-        Date knownDt = dateFormat.parse(dateStr)
-        cal.setTime(knownDt)
         if (dateStr != null) {
+            Date knownDt = dateFormat.parse(dateStr)
+            cal.setTime(knownDt)
+            def givenDateLastDay = new SimpleDateFormat('yyyy-MM-').format(cal.time) +
+                    cal.getActualMaximum(Calendar.DATE)
+            if (dateStr == givenDateLastDay) {
+                twelveDates.add(cal.time)
+            }
 //            year-to-date
-            for (every in 1..12) {
-                cal.add(Calendar.MONTH, -1)
-                cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE))
-                Date lastDateOfPreviousMonth = cal.time
-                twelveDates.add(lastDateOfPreviousMonth)
-                int prevMonth = cal.get(Calendar.MONTH)
-                if (prevMonth == 0) {        //if Jan, exit
-                    break
+            if (cal.get(Calendar.MONTH) != 0) {      //check if the month is already Jan
+                for (every in 1..12) {
+                    cal.add(Calendar.MONTH, -1)
+                    cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE))
+                    Date lastDateOfPreviousMonth = cal.time
+                    twelveDates.add(lastDateOfPreviousMonth)
+                    int prevMonth = cal.get(Calendar.MONTH)
+                    if (prevMonth == 0) {        //if Jan, exit
+                        break
+                    }
                 }
             }
         }
