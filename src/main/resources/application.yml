@@ -25,6 +25,10 @@ spring:
     url: 'jdbc:mysql://${db_host}/measure_report_service?createDatabaseIfNotExist=true'
     username: root
     password: secret
+    tomcat:
+      test-on-borrow: true
+      validation-interval: 30000
+
 logging:
 #  level.org.hibernate.SQL: trace
 #  level.org.hibernate.type.descriptor.sql: trace
