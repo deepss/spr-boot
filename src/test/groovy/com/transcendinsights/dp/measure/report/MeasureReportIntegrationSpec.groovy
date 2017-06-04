@@ -20,6 +20,7 @@ import spock.lang.Specification
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles('test')
+@SuppressWarnings(['ParameterCount'])
 class MeasureReportIntegrationSpec extends Specification {
 
     @Shared
@@ -51,61 +52,111 @@ class MeasureReportIntegrationSpec extends Specification {
         }
     }
 
-    protected String mockMeasure() {
+    protected String mockMeasure(String id, String identifier) {
         Measure newMeasure = new Measure()
         newMeasure.setStatus(Enumerations.PublicationStatus.ACTIVE)
-        newMeasure.setId('MEA001')
+        newMeasure.setId(id)
         newMeasure.addIdentifier(
                 new Identifier().with {
                     type = new CodeableConcept().addCoding(
                             new Coding('http://hl7.org/fhir/v2/0203', 'MR', 'Measure number'))
                     system = 'urn:oid:1.2.36.146.595.217.0.1'
-                    value = 'MEA001'
+                    value = identifier
                     it
                 }
         )
-        newMeasure.setTitle('Influenza immunization')
         MethodOutcome measureCreated = restClient.create().resource(newMeasure).execute()
         def meaCreatedId = measureCreated.id
         meaCreatedId
     }
 
-    protected String mockPatient() {
+    protected String mockPatient(String id, String identifier, String firstName, String lastName,
+                                 Date bdate, Enumerations.AdministrativeGender gender) {
         Patient patient = new Patient()
-        patient.setId('PAT001')
+        patient.setId(id)
         patient.addIdentifier(new Identifier().with {
             type = new CodeableConcept().addCoding(
-                    new Coding('http://hl7.org/fhir/v2/0203', 'MR', 'Patient number'))
+                    new Coding('http://hl7.org/fhir/v2/0203', 'P', 'Patient number'))
             system = 'urn:oid:1.2.36.146.595.217.0.1'
-            value = 'PAT001'
+            value = identifier
             it
         })
-        patient.addName().addGiven('New').setFamily('York')
-        patient.setGender(Enumerations.AdministrativeGender.FEMALE)
-        patient.setBirthDate(new Date(1980, 8, 1))
+        patient.addName().addGiven(firstName).setFamily(lastName)
+        patient.setGender(gender)
+        patient.setBirthDate(bdate)
         MethodOutcome patCreated = restClient.create().resource(patient).execute()
         def patId = patCreated.id
         patId
     }
 
+    protected String mockOrganization(String id, String identifier) {
+        Organization newOrg = new Organization()
+        newOrg.setId(id)
+        newOrg.addIdentifier(
+                new Identifier().with {
+                    type = new CodeableConcept().addCoding(
+                            new Coding('http://hl7.org/fhir/v2/0203', 'ORG',
+                                    'ORG number'))
+                    system = 'urn:oid:1.2.36.146.595.217.0.1'
+                    value = identifier
+                    it
+                }
+        )
+        MethodOutcome orgCreated = restClient.create().resource(newOrg).execute()
+        def orgCreatedId = orgCreated.id
+        orgCreatedId
+    }
+
     @SuppressWarnings(['UnnecessaryObjectReferences'])
-    protected String mockMeasureReport(String meaCreatedId, String patId) {
+    protected String mockMeasureReport(String meaCreatedId, String patId,
+                                       String orgId, String id, String identifier,
+                                       MeasureReport.MeasureReportStatus status,
+                                       MeasureReport.MeasureReportType mType,
+                                       Date start, Date end, Date mrDate) {
         //create a measureReport having measure & patient (setting only the required fields
         MeasureReport measureReport = new MeasureReport()
-        measureReport.setId('MR001_PAT001')
+        measureReport.setId(id)
         measureReport.setIdentifier(new Identifier().with {
             type = new CodeableConcept().addCoding(
                     new Coding('http://hl7.org/fhir/v2/0203', 'MR', 'MR number'))
             system = 'urn:oid:1.2.36.146.595.217.0.1'
-            value = 'MR001_PAT001'
+            value = identifier
             it
         })
-        measureReport.setStatus(MeasureReport.MeasureReportStatus.COMPLETE)
-        measureReport.setType(MeasureReport.MeasureReportType.INDIVIDUAL)
+        measureReport.setStatus(status)
+        measureReport.setType(mType)
         measureReport.setMeasure(new Reference(meaCreatedId))
         measureReport.setPatient(new Reference(patId))
-        measureReport.setPeriod(new Period().
-                setStart(new Date(2016, 1, 1)).setEnd(new Date(2016, 2, 1)))
+        measureReport.setDate(mrDate)
+        measureReport.setReportingOrganization(new Reference(orgId))
+        measureReport.setPeriod(new Period().setStart(start).setEnd(end))
+        MethodOutcome mReportCreated = restClient.create().resource(measureReport).execute()
+        def mReportId = mReportCreated.id
+        mReportId
+    }
+
+    @SuppressWarnings(['UnnecessaryObjectReferences'])
+    protected String mockMeasureReportWithoutPatient(String meaCreatedId, String id, String identifier,
+                                                     MeasureReport.MeasureReportStatus status,
+                                                     MeasureReport.MeasureReportType mrType,
+                                                     Date start, Date end, Date mrDate,
+                                                     String orgId) {
+        //create a measureReport having measure & patient (setting only the required fields
+        MeasureReport measureReport = new MeasureReport()
+        measureReport.setId(id)
+        measureReport.setIdentifier(new Identifier().with {
+            type = new CodeableConcept().addCoding(
+                    new Coding('http://hl7.org/fhir/v2/0203', 'MR', 'MR number'))
+            system = 'urn:oid:1.2.36.146.595.217.0.1'
+            value = identifier
+            it
+        })
+        measureReport.setStatus(status)
+        measureReport.setType(mrType)
+        measureReport.setMeasure(new Reference(meaCreatedId))
+        measureReport.setPeriod(new Period().setStart(start).setEnd(end))
+        measureReport.setDate(mrDate)
+        measureReport.setReportingOrganization(new Reference(orgId))
         MethodOutcome mReportCreated = restClient.create().resource(measureReport).execute()
         def mReportId = mReportCreated.id
         mReportId

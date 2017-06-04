@@ -1,6 +1,9 @@
 package com.transcendinsights.dp.measure.report.fhir.operations.search
 
 import ca.uhn.fhir.jpa.dao.IFhirResourceDao
+import ca.uhn.fhir.jpa.dao.SearchParameterMap
+import ca.uhn.fhir.rest.param.DateParam
+import ca.uhn.fhir.rest.param.StringParam
 import ca.uhn.fhir.rest.server.IBundleProvider
 import ca.uhn.fhir.rest.server.SimpleBundleProvider
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException
@@ -18,13 +21,13 @@ import java.text.SimpleDateFormat
  */
 @Slf4j
 @Service
-@SuppressWarnings(['SimpleDateFormatMissingLocale'])
+@SuppressWarnings(['SimpleDateFormatMissingLocale', 'DuplicateStringLiteral'])
 class DateSearchOperationServiceImpl implements DateSearchOperationService {
 
     @Autowired
     IFhirResourceDao<MeasureReport> newMeasureReportDao
 
-    @Override
+    /*@Override
     IBundleProvider searchMonthlyMeasureReports(String givenDate, String orgId, String measureId) {
         def dateList = []
         List<IBaseResource> resources = []
@@ -33,6 +36,22 @@ class DateSearchOperationServiceImpl implements DateSearchOperationService {
         for (each in dateList) {
             def eachId= dateFormat.format(each) + "-$orgId-$measureId"
             MeasureReport mr = searchByMRId(eachId)
+            if (mr != null) {
+                resources.add(mr)
+            }
+        }
+        new SimpleBundleProvider(resources)
+    }*/
+
+    @Override
+    IBundleProvider searchMonthlyMeasureReports(String givenDate, String orgId, String measureId) {
+        def dateList = []
+        List<IBaseResource> resources = []
+        SimpleDateFormat dateFormat = new SimpleDateFormat('yyyy-MM-dd')
+        dateList = listDates(givenDate)
+        for (each in dateList) {
+//            def eachId= dateFormat.format(each) + "-$orgId-$measureId"
+            MeasureReport mr = searchByMR(dateFormat.format(each), orgId, measureId)
             if (mr != null) {
                 resources.add(mr)
             }
@@ -54,19 +73,32 @@ class DateSearchOperationServiceImpl implements DateSearchOperationService {
             }
 //            year-to-date
             if (cal.get(Calendar.MONTH) != 0) {      //check if the month is already Jan
-                for (every in 1..12) {
+                (1..12).find {
                     cal.add(Calendar.MONTH, -1)
+                    int prevMonth = cal.get(Calendar.MONTH)
                     cal.set(Calendar.DATE, cal.getActualMaximum(Calendar.DATE))
                     Date lastDateOfPreviousMonth = cal.time
                     twelveDates.add(lastDateOfPreviousMonth)
-                    int prevMonth = cal.get(Calendar.MONTH)
-                    if (prevMonth == 0) {        //if Jan, exit
-                        break
-                    }
+                    prevMonth == 0
                 }
             }
         }
         twelveDates
+    }
+
+    MeasureReport searchByMR(String mrDate, String orgId, String measureId) {
+        MeasureReport foundMR
+        SearchParameterMap searchMap = new SearchParameterMap()
+        searchMap.add('reportingOrganization', new StringParam(orgId))
+        searchMap.add('measure', new StringParam(measureId))
+        searchMap.add('date', new DateParam(mrDate))
+
+        try {
+            foundMR = newMeasureReportDao.search(searchMap)
+        }catch (ResourceNotFoundException r) {
+            log.debug("resource not found for $mrDate, $orgId, $measureId")
+        }
+        foundMR
     }
 
     MeasureReport searchByMRId(String mrId) {
@@ -76,6 +108,7 @@ class DateSearchOperationServiceImpl implements DateSearchOperationService {
         MeasureReport foundMR
         try {
             foundMR = newMeasureReportDao.read(idType)
+            foundMR = newMeasureReportDao.search(orgid, measureId, date)
         }catch (ResourceNotFoundException r) {
             log.debug("resource not found $mrId")
         }
