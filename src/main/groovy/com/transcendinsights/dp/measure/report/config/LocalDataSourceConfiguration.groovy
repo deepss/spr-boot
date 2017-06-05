@@ -17,7 +17,7 @@ import javax.sql.DataSource
 @Profile('local')
 class LocalDataSourceConfiguration {
   @Bean
-  @ConfigurationProperties('spring.datasource')
+  @ConfigurationProperties('spring.datasource.tomcat')
   DataSource dataSource() {
     DataSourceBuilder.create().build()
   }
