@@ -22,9 +22,14 @@ db_host: localhost
 spring:
   profiles: local
   datasource:
-    url: 'jdbc:mysql://${db_host}/measure_report_service?createDatabaseIfNotExist=true'
-    username: root
-    password: secret
+    tomcat:
+      url: 'jdbc:mysql://${db_host}/measure_report_service?createDatabaseIfNotExist=true'
+      username: root
+      password: secret
+      test-on-borrow: true
+      validation-interval: 30000
+      validation-query: 'SELECT 1'
+      driver-class-name: com.mysql.jdbc.Driver
 logging:
 #  level.org.hibernate.SQL: trace
 #  level.org.hibernate.type.descriptor.sql: trace
