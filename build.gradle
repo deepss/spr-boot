@@ -3,7 +3,7 @@ buildscript {
 		springBootVersion = '1.5.3.RELEASE'
 	}
 	repositories {
-		maven { url "http://ti-nexus.rsc.humad.com:8081/nexus/content/groups/public"}
+		maven { url "http://ti-repo.rsc.humad.com/artifactory/public"}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -46,7 +46,7 @@ jar {
 sourceCompatibility = 1.8
 
 repositories {
-	maven { url "http://ti-nexus.rsc.humad.com:8081/nexus/content/groups/public"}
+	maven { url "http://ti-repo.rsc.humad.com/artifactory/public"}
 }
 
 
@@ -70,6 +70,8 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.spockframework:spock-core:1.1-groovy-2.4-rc-3')
 	testCompile('org.spockframework:spock-spring:1.1-groovy-2.4-rc-3')
+	testCompile 'io.ratpack:ratpack-groovy:1.3.3'
+	testCompile 'io.ratpack:ratpack-groovy-test:1.3.3'
 
 	testRuntime('com.h2database:h2')
 }
