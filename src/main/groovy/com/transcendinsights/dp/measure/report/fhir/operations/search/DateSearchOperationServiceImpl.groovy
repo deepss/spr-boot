@@ -3,6 +3,7 @@ package com.transcendinsights.dp.measure.report.fhir.operations.search
 import ca.uhn.fhir.jpa.dao.IFhirResourceDao
 import ca.uhn.fhir.jpa.dao.SearchParameterMap
 import ca.uhn.fhir.rest.param.DateParam
+import ca.uhn.fhir.rest.param.ReferenceParam
 import ca.uhn.fhir.rest.param.StringParam
 import ca.uhn.fhir.rest.server.IBundleProvider
 import ca.uhn.fhir.rest.server.SimpleBundleProvider
@@ -87,16 +88,19 @@ class DateSearchOperationServiceImpl implements DateSearchOperationService {
     }
 
     MeasureReport searchByMR(String mrDate, String orgId, String measureId) {
+        //log.error "Search params are: mrDate:, orgId: ${orgId}, measureId: ${measureId}"
         MeasureReport foundMR
         SearchParameterMap searchMap = new SearchParameterMap()
-        searchMap.add('reportingOrganization', new StringParam(orgId))
-        searchMap.add('measure', new StringParam(measureId))
+        searchMap.add('reportingOrganization', new ReferenceParam(orgId))
+        searchMap.add('measure', new ReferenceParam(measureId))
         searchMap.add('date', new DateParam(mrDate))
-
-        try {
-            foundMR = newMeasureReportDao.search(searchMap)
-        }catch (ResourceNotFoundException r) {
-            log.debug("resource not found for $mrDate, $orgId, $measureId")
+        //log.error "!!!SearchMap are:  orgId: ${searchMap.get('reportingOrganization')}, measureId: ${searchMap.get('measure')}"
+        IBundleProvider ibundleP = newMeasureReportDao.search(searchMap)
+        int size = ibundleP.size()
+        //log.error "size: ${size}"
+        List<IBaseResource> resources = ibundleP.getResources(0, size)
+        if (size != 0) {
+            foundMR = resources?.get(0)
         }
         foundMR
     }
@@ -108,7 +112,7 @@ class DateSearchOperationServiceImpl implements DateSearchOperationService {
         MeasureReport foundMR
         try {
             foundMR = newMeasureReportDao.read(idType)
-            foundMR = newMeasureReportDao.search(orgid, measureId, date)
+            //foundMR = newMeasureReportDao.search(orgid, measureId, date)
         }catch (ResourceNotFoundException r) {
             log.debug("resource not found $mrId")
         }

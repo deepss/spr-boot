@@ -6,6 +6,7 @@ import ca.uhn.fhir.rest.client.IGenericClient
 import ca.uhn.fhir.rest.client.ServerValidationModeEnum
 import ca.uhn.fhir.rest.client.interceptor.BasicAuthInterceptor
 import ca.uhn.fhir.rest.client.interceptor.LoggingInterceptor
+import groovy.util.logging.Slf4j
 import org.hl7.fhir.dstu3.model.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -18,6 +19,7 @@ import spock.lang.Specification
  * @author Olu Oyedipe, dxl0190
  * @since 2017-05-16.
  */
+@Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles('test')
 @SuppressWarnings(['ParameterCount'])
@@ -65,8 +67,10 @@ class MeasureReportIntegrationSpec extends Specification {
                     it
                 }
         )
+        log.error "@!@ before create, id: ${newMeasure.id}"
         MethodOutcome measureCreated = restClient.create().resource(newMeasure).execute()
         def meaCreatedId = measureCreated.id
+        log.error "@?@ after create, new id: ${meaCreatedId}"
         meaCreatedId
     }
 
