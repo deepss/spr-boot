@@ -17,6 +17,7 @@ import spock.lang.Specification
 /**
  * @author Olu Oyedipe, dxl0190
  * @since 2017-05-16.
+ * parent class to allow mock of reference objects
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles('test')
@@ -51,7 +52,12 @@ class MeasureReportIntegrationSpec extends Specification {
           initialized = true
         }
     }
-
+    /**
+     * helper class to get an instance of Measure resource
+     * @param id
+     * @param identifier
+     * @return
+     */
     protected String mockMeasure(String id, String identifier) {
         Measure newMeasure = new Measure()
         newMeasure.setStatus(Enumerations.PublicationStatus.ACTIVE)
@@ -95,7 +101,7 @@ class MeasureReportIntegrationSpec extends Specification {
         newOrg.addIdentifier(
                 new Identifier().with {
                     type = new CodeableConcept().addCoding(
-                            new Coding('http://hl7.org/fhir/v2/0203', 'ORG',
+                            new Coding('http://hl7.org/fhir/v2/0203', 'ORG',    //todo not legit code
                                     'ORG number'))
                     system = 'urn:oid:1.2.36.146.595.217.0.1'
                     value = identifier
@@ -108,7 +114,7 @@ class MeasureReportIntegrationSpec extends Specification {
     }
 
     @SuppressWarnings(['UnnecessaryObjectReferences'])
-    protected String mockMeasureReport(String meaCreatedId, String patId,
+    protected String mockMeasureReport(String meaCreatedId, String patId,       //todo param obect with builder pattern
                                        String orgId, String id, String identifier,
                                        MeasureReport.MeasureReportStatus status,
                                        MeasureReport.MeasureReportType mType,

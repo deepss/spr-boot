@@ -12,6 +12,7 @@ spring:
 server:
   port: 8090
 db_host: localhost
+paging-size: 20
 
 #validate:
 #  measurereport:

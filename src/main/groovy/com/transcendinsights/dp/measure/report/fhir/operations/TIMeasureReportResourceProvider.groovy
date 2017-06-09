@@ -9,33 +9,37 @@ import com.transcendinsights.dp.measure.report.fhir.operations.search.DateSearch
 import org.hl7.fhir.dstu3.model.DateType
 import org.hl7.fhir.dstu3.model.StringType
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.env.Environment
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
 /**
  * Created by dxl0190 on 5/12/17.
+ * adding extension to default measureReportResourceProvider
  */
 class TIMeasureReportResourceProvider extends MeasureReportResourceProvider {
 
     @Autowired
     DateSearchOperationService dateSearchOperationService
 
+    /**
+     * ex : http://localhost:8090/fhir/MeasureReport/$monthlyMeasureReport
+     * with request body as parameters resource with orgId, measureId, date
+     * @param orgId
+     * @param measureId
+     * @param givenDate
+     * @return bundle with matched resources with YTD month-end measureReports
+     */
     @SuppressWarnings(['SimpleDateFormatMissingLocale'])
     @Operation(name = '$monthlyMeasureReport', bundleType = BundleTypeEnum.SEARCHSET)
     IBundleProvider searchMonthlyMeasureReports(
             @OperationParam(name = 'orgId') StringType orgId,
             @OperationParam(name = 'measureId') StringType measureId,
             @OperationParam(name = 'date') DateType givenDate) {
-//        ex : http://localhost:8090/fhir/MeasureReport/$monthlyMeasureReport
-//        add request body as parameters resource with orgId, measureId, date
-        DateFormat dateFormat = new SimpleDateFormat('yyyy-MM-dd')
+        DateFormat dateFormat = new SimpleDateFormat('yyyy-MM-dd', Locale.US)
         def dateParam
-        if (givenDate != null) {
-            dateParam = dateFormat.format(givenDate.value)
-        }else {
-            dateParam = dateFormat.format(new Date())
-        }
+        dateParam = givenDate ? dateFormat.format(givenDate.value) : dateFormat.format(new Date())
         dateSearchOperationService.searchMonthlyMeasureReports(dateParam, orgId.toString(), measureId.toString())
     }
 }

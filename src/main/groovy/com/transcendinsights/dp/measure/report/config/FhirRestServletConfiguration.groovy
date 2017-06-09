@@ -7,6 +7,7 @@ import ca.uhn.fhir.jpa.dao.IFhirSystemDao
 import ca.uhn.fhir.jpa.provider.dstu3.JpaConformanceProviderDstu3
 import ca.uhn.fhir.jpa.provider.dstu3.JpaSystemProviderDstu3
 import ca.uhn.fhir.jpa.search.DatabaseBackedPagingProvider
+import ca.uhn.fhir.rest.server.BasePagingProvider
 import ca.uhn.fhir.rest.server.ETagSupportEnum
 import ca.uhn.fhir.rest.server.EncodingEnum
 import ca.uhn.fhir.rest.server.IPagingProvider
@@ -15,6 +16,11 @@ import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor
 import ca.uhn.fhir.rest.server.interceptor.IServerInterceptor
 import org.hl7.fhir.dstu3.model.Bundle
 import org.hl7.fhir.dstu3.model.Meta
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.PropertySource
+import org.springframework.core.env.Environment
 import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.cors.CorsConfiguration
 
@@ -61,9 +67,9 @@ class FhirRestServletConfiguration extends RestfulServer {
     setDefaultPrettyPrint(true)
     setDefaultResponseEncoding(EncodingEnum.JSON)
 
+    def pageSize = Integer.parseInt(applicationContext.getBean(Environment).getProperty('paging-size'))
     IPagingProvider pagingProvider = applicationContext.getBean(DatabaseBackedPagingProvider)
-    pagingProvider.setDefaultPageSize(30)
-    setPagingProvider(pagingProvider)
+    pagingProvider.setDefaultPageSize(pageSize)
 
     CorsConfiguration config = new CorsConfiguration().with {
       addAllowedHeader('Origin')
