@@ -91,5 +91,4 @@ class DateSearchOperationServiceImpl implements DateSearchOperationService {
         }
         mrResources
     }
-
 }
