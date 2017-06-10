@@ -4,7 +4,6 @@ import ca.uhn.fhir.jpa.dao.IFhirResourceDao
 import ca.uhn.fhir.jpa.dao.SearchParameterMap
 import ca.uhn.fhir.rest.param.DateParam
 import ca.uhn.fhir.rest.param.ReferenceParam
-import ca.uhn.fhir.rest.param.StringParam
 import ca.uhn.fhir.rest.server.IBundleProvider
 import ca.uhn.fhir.rest.server.SimpleBundleProvider
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException
@@ -43,6 +42,11 @@ class DateSearchOperationServiceImpl implements DateSearchOperationService {
         new SimpleBundleProvider(resources)
     }
 
+    /**
+     * method to calculate month-end date back to January
+     * @param dateStr
+     * @return list of month-end dates
+     */
     def listDates(String dateStr) {
         List<String> twelveDates = []
         SimpleDateFormat dateFormat = new SimpleDateFormat('yyyy-MM-dd', Locale.US)
@@ -72,7 +76,7 @@ class DateSearchOperationServiceImpl implements DateSearchOperationService {
 
     def searchByMR(String mrDate, String orgId, String measureId) {
         def foundMR
-        def MRResources
+        def mrResources
         SearchParameterMap searchMap = new SearchParameterMap()
         searchMap.add('reportingOrganization', new ReferenceParam(orgId))
         searchMap.add('measure', new ReferenceParam(measureId))
@@ -80,12 +84,12 @@ class DateSearchOperationServiceImpl implements DateSearchOperationService {
         try {
             foundMR = newMeasureReportDao.search(searchMap)
             if (foundMR.size() > 0) {
-                MRResources = foundMR.getResources(0, foundMR.size()) as List<IBaseResource>
+                mrResources = foundMR.getResources(0, foundMR.size()) as List<IBaseResource>
             }
         }catch (ResourceNotFoundException r) {
             log.debug("resource not found for $mrDate, $orgId, $measureId")
         }
-        MRResources
+        mrResources
     }
 
 }

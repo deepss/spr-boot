@@ -9,7 +9,6 @@ import com.transcendinsights.dp.measure.report.fhir.operations.search.DateSearch
 import org.hl7.fhir.dstu3.model.DateType
 import org.hl7.fhir.dstu3.model.StringType
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.core.env.Environment
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -35,11 +34,10 @@ class TIMeasureReportResourceProvider extends MeasureReportResourceProvider {
     @Operation(name = '$monthlyMeasureReport', bundleType = BundleTypeEnum.SEARCHSET)
     IBundleProvider searchMonthlyMeasureReports(
             @OperationParam(name = 'orgId') StringType orgId,
-            @OperationParam(name = 'measureId') StringType measureId,
-            @OperationParam(name = 'date') DateType givenDate) {
+            @OperationParam(name = 'measureId') StringType measureId
+            , @OperationParam(name = 'date') DateType givenDate) {
         DateFormat dateFormat = new SimpleDateFormat('yyyy-MM-dd', Locale.US)
-        def dateParam
-        dateParam = givenDate ? dateFormat.format(givenDate.value) : dateFormat.format(new Date())
+        def dateParam = givenDate ? dateFormat.format(givenDate.value) : dateFormat.format(new Date())
         dateSearchOperationService.searchMonthlyMeasureReports(dateParam, orgId.toString(), measureId.toString())
     }
 }
