@@ -41,7 +41,6 @@ class MeasureReportResourceProviderConfiguration {
     new TIMeasureReportResourceProvider().with {
       dao = this.newMeasureReportDao
       context = fhirContext
-
       it
     }
   }
