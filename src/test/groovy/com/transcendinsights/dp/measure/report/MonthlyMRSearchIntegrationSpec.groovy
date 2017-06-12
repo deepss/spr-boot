@@ -1,115 +1,63 @@
 package com.transcendinsights.dp.measure.report
 
-import ca.uhn.fhir.context.FhirContext
-import ca.uhn.fhir.model.primitive.IdDt
-import ca.uhn.fhir.rest.client.IGenericClient
-import ca.uhn.fhir.rest.client.ServerValidationModeEnum
-import ca.uhn.fhir.rest.client.interceptor.BasicAuthInterceptor
-import ca.uhn.fhir.rest.client.interceptor.LoggingInterceptor
-import ca.uhn.fhir.rest.method.SearchParameter
-import ca.uhn.fhir.rest.method.SearchStyleEnum
-import ca.uhn.fhir.rest.server.IBundleProvider
-import com.transcendinsights.dp.measure.report.fhir.operations.TIMeasureReportResourceProvider
-import groovy.util.logging.Slf4j
-import org.hl7.fhir.dstu3.model.Bundle
-import org.hl7.fhir.dstu3.model.DateType
-import org.hl7.fhir.dstu3.model.Enumerations
-import org.hl7.fhir.dstu3.model.MeasureReport
-import org.hl7.fhir.dstu3.model.Parameters
-import org.hl7.fhir.instance.model.StringType
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
-import spock.lang.Shared
+import org.hl7.fhir.dstu3.model.*
+import spock.lang.Unroll
 
-import javax.measure.Measure
-import java.lang.reflect.Parameter
 import java.text.SimpleDateFormat
 
 /**
- * Created by sxl9349 on 6/4/17.
+ * @author sxl9349, dxl0190
+ * @since 2017-06-04.
  */
-@Slf4j
-class MonthlyMRSearchIntegrationSpec extends MeasureReportIntegrationSpec{
 
-    def 'fetch measureReports by orgId, measureId and date'() {
+@SuppressWarnings(['UnnecessaryGetter'])
+class MonthlyMRSearchIntegrationSpec extends MeasureReportIntegrationSpec {
+    @Unroll
+    def 'fetch measureReports by orgId, measureId or date'() {
 
-        given: 'create measureReports with measure & organization'
+        given: 'mock objects for measure, organization, searchParameter, measureReport'
 
-        def mea = mockMeasure('M01', 'Measure-01')
-        def org = mockOrganization('ORG01', 'Organization-01')
-        log.error "@@@!@@@ meaId: $mea ; orgId: $org"
+        List<String> id = ['MR-001', 'MR-002', 'MR-003', 'MR-004', 'MR-005', 'MR-006']
+        List<String> date = ['2017-05-31', '2017-04-30', '2017-03-31', '2017-02-28', '2017-01-31', '2016-12-31']
+        def measureId = mockMeasure('M01')
+        def orgId = mockOrganization('ORG01')
+        mockMeasureReports(measureId, orgId, id, date)
 
-        def mReport01 = mockMeasureReportWithoutPatient(mea, 'MR-001', 'MeasureReport-001',
-                MeasureReport.MeasureReportStatus.COMPLETE, MeasureReport.MeasureReportType.SUMMARY,
-                new SimpleDateFormat('yyyy-MM-dd').parse('2017-01-01'), new SimpleDateFormat('yyyy-MM-dd').parse('2017-01-31'),
-                new SimpleDateFormat('yyyy-MM-dd').parse('2017-01-31'), org)
-        def mReport02 = mockMeasureReportWithoutPatient(mea, 'MR-002', 'MeasureReport-002',
-                MeasureReport.MeasureReportStatus.COMPLETE, MeasureReport.MeasureReportType.SUMMARY,
-                new SimpleDateFormat('yyyy-MM-dd').parse('2017-01-01'), new SimpleDateFormat('yyyy-MM-dd').parse('2017-02-28'),
-                new SimpleDateFormat('yyyy-MM-dd').parse('2017-02-28'), org)
-        def mReport03 = mockMeasureReportWithoutPatient(mea, 'MR-003', 'MeasureReport-003',
-                MeasureReport.MeasureReportStatus.COMPLETE, MeasureReport.MeasureReportType.SUMMARY,
-                new SimpleDateFormat('yyyy-MM-dd').parse('2017-01-01'), new SimpleDateFormat('yyyy-MM-dd').parse('2017-03-31'),
-                new SimpleDateFormat('yyyy-MM-dd').parse('2017-03-31'), org)
-//        def mReport04 = mockMeasureReportWithoutPatient(mea, 'MR-004', 'MeasureReport-004',
-//                MeasureReport.MeasureReportStatus.COMPLETE, MeasureReport.MeasureReportType.SUMMARY,
-//                new Date(2017, 01, 01), new Date(2017, 04, 30),
-//                new Date(2017, 04, 30), org)
-//        def mReport05 = mockMeasureReportWithoutPatient(mea, 'MR-005', 'MeasureReport-005',
-//                MeasureReport.MeasureReportStatus.COMPLETE, MeasureReport.MeasureReportType.SUMMARY,
-//                new Date(2017, 01, 01), new Date(2017, 05, 31),
-//                new Date(2017, 05, 31), org)
+        when: 'MeasureReport is searched - POST http://localhost:port/fhir/MeasureReport/$monthlyMeasureReport'
+        def searchMReport = performSearch(measureId, orgId, givenDate)
 
-        when: 'MeasureReports are searched by POST operation http://localhost:port/fhir/MeasureReport/$monthlyMeasureReport'
+        then: 'return YTD month-end measureReports'
+        searchMReport.entry.size() == expectedSize
+        searchMReport.entry.get(0).getResource().resourceType.name() == 'MeasureReport'
 
-        def searchUrlM = "Measure?identifier=Measure-01"
-        Bundle searchM = restClient.search()
-                .byUrl(searchUrlM)
-                .returnBundle(Bundle)
-                .execute()
+        where:
+        givenDate    | expectedSize
+        null         | 5
+        '2017-05-04' | 4
+        '2017-03-20' | 2
+        '2017-01-31' | 1
+    }
 
-        def searchUrlOrg = "Organization?identifier=Organization-01"
-        Bundle searchOrg = restClient.search()
-                .byUrl(searchUrlOrg)
-                .returnBundle(Bundle)
-                .execute()
-        def searchUrlMR = "MeasureReport"
-        Bundle searchMR = restClient.search()
-                .byUrl(searchUrlMR)
-                .returnBundle(Bundle)
-                .execute()
+    def mockMeasureReports(String measureId, String orgId, List<String> id, List<String> date) {
+        def dateFormat = new SimpleDateFormat('yyyy-MM-dd', Locale.US)
+        for (each in (0..id.size() - 1)) {
+            mockMeasureReportWithoutPatient(measureId, orgId, id[each], dateFormat.parse(date[each]))
+        }
+    }
 
-        // Create a client to talk to the HeathIntersections server
-//        FhirContext ctx = FhirContext.forDstu2();
-//        IGenericClient client = ctx.newRestfulGenericClient("http://fhir-dev.healthintersections.com.au/open");
-//        client.registerInterceptor(new LoggingInterceptor(true));true
-
-// Create the input parameters to pass to the server
+    Bundle performSearch(String measureId, String orgId, String date = null) {
         Parameters inParams = new Parameters()
-        inParams.addParameter().setName('orgId').setValue(new org.hl7.fhir.dstu3.model.StringType(org))
-        inParams.addParameter().setName('measureId').setValue(new org.hl7.fhir.dstu3.model.StringType(mea))
-        inParams.addParameter().setName('date').setValue(new DateType('2017-02-28'))
+        inParams.addParameter().setName('measureId').setValue(new StringType(measureId))
+        inParams.addParameter().setName('orgId').setValue(new StringType(orgId))
+        if (date) { inParams.addParameter().setName('date').setValue(new DateType(date)) }
 
-// Invoke $everything on "Patient/1"
         Parameters outParams = restClient
                 .operation()
                 .onType(MeasureReport)
                 .named('$monthlyMeasureReport')
                 .withParameters(inParams)
-                .encodedJson()
-                //.returnBundle(Bundle)
                 .execute()
 
-        //println "######$outParams"
-        def searchMReport = outParams.parameterFirstRep.getResource() as Bundle
-
-//        def searchMReport = outParams.get
-//
-          then: 'return measureReports'
-        searchMReport.entry.get(0).getResource().resourceType.name() == 'MeasureReport'
-        searchMReport.entry.get(0).getResource().id == mReport01
-        searchMReport.entry.size() == 3
-
+        outParams.parameterFirstRep.getResource() as Bundle
     }
-
 }

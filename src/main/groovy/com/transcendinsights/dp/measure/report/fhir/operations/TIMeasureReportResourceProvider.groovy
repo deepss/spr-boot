@@ -25,9 +25,9 @@ class TIMeasureReportResourceProvider extends MeasureReportResourceProvider {
     /**
      * ex : http://localhost:8090/fhir/MeasureReport/$monthlyMeasureReport
      * with request body as parameters resource with orgId, measureId, date
-     * @param orgId
-     * @param measureId
-     * @param givenDate
+     * @param orgId - Organization.id
+     * @param measureId - Measure.id
+     * @param givenDate - MeasureReport.date
      * @return bundle with matched resources with YTD month-end measureReports
      */
     @SuppressWarnings(['SimpleDateFormatMissingLocale'])
