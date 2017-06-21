@@ -3,7 +3,7 @@ buildscript {
 		springBootVersion = '1.5.3.RELEASE'
 	}
 	repositories {
-		maven { url "http://ti-repo.rsc.humad.com/artifactory/public"}
+		maven { url "http://local/artifactory/public"}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -46,7 +46,7 @@ jar {
 sourceCompatibility = 1.8
 
 repositories {
-	maven { url "http://ti-repo.rsc.humad.com/artifactory/public"}
+	maven { url "http://local/artifactory/public"}
 }
 
 

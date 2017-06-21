@@ -1,6 +1,6 @@
 buildscript {
   repositories {
-    maven { url 'http://ti-repo.rsc.humad.com/artifactory/public' }
+    maven { url 'http://local/artifactory/public' }
   }
   dependencies {
     classpath 'net.saliman:gradle-cobertura-plugin:2.3.1'

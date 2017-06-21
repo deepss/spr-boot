@@ -18,7 +18,7 @@ task setupSonar {
 
         'sonar.groovy.cobertura.reportPath': 'build/reports/cobertura/coverage.xml',
 
-        'sonar.scm.url'                    : 'scm:git:git://ti-github.rsc.humad.com/TranscendInsights/dp-measure-report-service.git',
+        'sonar.scm.url'                    : 'scm:git:git://giturl',
         'sonar.scm.enabled'                : 'true',
 
         'sonar.jdbc.username'              : 'sonar',

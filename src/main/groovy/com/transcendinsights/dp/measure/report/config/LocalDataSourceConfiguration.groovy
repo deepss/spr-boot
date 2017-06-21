@@ -8,11 +8,6 @@ import org.springframework.context.annotation.Profile
 
 import javax.sql.DataSource
 
-/**
- * @author Olu Oyedipe
- * @author Kurt Kremer
- * @since 2017-05-08.
- */
 @Configuration
 @Profile('local')
 class LocalDataSourceConfiguration {

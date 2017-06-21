@@ -10,7 +10,7 @@ ruleset {
    *
    * <p>
    *   Please see
-   *   <a href="http://ti-github.rsc.humad.com/TranscendInsights/rahulesque">TranscendInsights/rahulesque</a>
+   *   <a href="rulesetUrl">ruleset</a>
    *   for more details
    * </p>
    * @param resource

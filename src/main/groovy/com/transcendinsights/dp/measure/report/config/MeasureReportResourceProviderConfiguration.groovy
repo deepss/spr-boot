@@ -13,11 +13,6 @@ import org.springframework.context.annotation.Configuration
 
 import javax.annotation.PostConstruct
 
-/**
- * @author Olu Oyedipe
- * @author Kurt Kremer
- * @since 2017-05-08.
- */
 @Configuration
 class MeasureReportResourceProviderConfiguration {
 

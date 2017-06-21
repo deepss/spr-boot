@@ -2,7 +2,7 @@
 buildscript {
 
   repositories {
-    maven { url "http://ti-repo.rsc.humad.com/artifactory/public"}
+    maven { url "http://local/artifactory/public"}
     jcenter()
   }
   dependencies {
@@ -11,8 +11,8 @@ buildscript {
 
 }
 
-def dockerRegistry = 'ti-dockeri.rsc.humad.com'
-def dockerUser = 'transcendinsights'
+def dockerRegistry = ''
+def dockerUser = ''
 
 apply plugin: com.bmuschko.gradle.docker.DockerRemoteApiPlugin
 
@@ -47,7 +47,7 @@ task startDatabaseContainer(type: DockerStartContainer) {
 task createDockerfile(type: Dockerfile, dependsOn: build) {
   destFile = file('build/Dockerfile')
   from 'openjdk:8'
-  maintainer 'Kurt Kremer "kxk8283@transcendinsights.com"'
+  maintainer ''
   volume '/tmp'
   addFile "libs/${jar.archiveName}", 'app.jar'
   runCommand 'sh -c "touch /app.jar"'

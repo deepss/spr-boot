@@ -17,11 +17,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.persistence.EntityManagerFactory
 import javax.sql.DataSource
 
-/**
- * @author Olu Oyedipe
- * @author Kurt Kremer
- * @since 2017-05-08.
- */
 @Configuration
 @EnableTransactionManagement
 class FhirServerConfigDstu3 extends BaseJavaConfigDstu3 {

@@ -21,11 +21,6 @@ import org.springframework.web.cors.CorsConfiguration
 
 import javax.servlet.ServletException
 
-/**
- * @author Olu Oyedipe
- * @author Kurt Kremer
- * @since 2017-05-08.
- */
 class FhirRestServletConfiguration extends RestfulServer {
 
   WebApplicationContext applicationContext

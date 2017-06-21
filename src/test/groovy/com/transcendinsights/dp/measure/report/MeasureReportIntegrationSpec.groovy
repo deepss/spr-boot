@@ -16,7 +16,7 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 /**
- * @author Olu Oyedipe, dxl0190
+ * @author dxl0190
  * @since 2017-05-16.
  * parent class to allow mock of reference objects
  */
