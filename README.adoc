@@ -1,8 +1,3 @@
-= measure-report-service
-
-A measure-report fhir resource server
-The goals for this application is to provide measure report fhir data to clients
-The discussion for this service can be found at http://jira.transcendinsights.com/browse/HCI-457
 
 == Running locally
 To run the service locally:
@@ -20,25 +15,6 @@ Start the application
 --
 ./gradlew bootRun -Pargs="--spring.profiles.active=local"
 --
-
-== Cloud foundry deploy
-
-To run the service on cloud foundry:
-
-Create the jar artifact
-
-[source,bash]
---
-./gradlew build
---
-
-Deploy to cloud foundry
-
-[source,bash]
---
-cf push <unique appname> -p <path to artifact>
---
-
 
 == Docker Deploy
 NOTE: Before deploying via docker, make sure that docker is installed and running.
@@ -63,32 +39,8 @@ IMAGE_TAG=<version> docker-compose up app <2>
 
 <2> start the application. <version> is the version of the docker image you want to run
 
-To load data into the MR service, the simplest way is to use the http://hapifhir.io/doc_rest_client.html[HAPI REST Client]
-
 == Get a resource
 
 http://localhost:8090/fhir/MeasureReport/1
 
 (user/secret)
-
-== Design
-
-This service is created to serve requests for FHIR resources directly related to measure report resources contained in
-the Anvita bundle produced during analytics runs.  The FHIR-compatible store and query capability is provided by the
-HAPI FHIR JPA server implementation http://hapifhir.io/ and a test implementation of this server with sample data is
-available at http://fhirtest.uhn.ca/home?serverId=home_21
-
-Care and Populations are the primary clients of this service, and are interested in obtaining measure report data for
-patients and organization level rollups respectively.  Other client applications are anticipated and so general support
-for granular FHIR resources is the goal of this service.
-
-In order to populate our implementation, this service shall listen for and process measure report events
-published by Event Store on a kafka stream.  When an event arrives, this service shall deconstruct the FHIR bundle into
-its consituent resources of Measure, Measure Report, and Library and store them accordingly.  References to Measures
-and Libraries within the Measure Report sections of the bundle shall be updated to reflect the resource IDs generated
-during storage.
-
-This service will also be used by the Meausure Report aggregator service to store organization-level rollup reports
-generated in that aggregator service.
-
-
